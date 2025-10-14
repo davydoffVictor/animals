@@ -13,10 +13,11 @@ public class Animal implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Enumerated(value = EnumType.STRING)
     private Type type;
+
 
     private LocalDate birthDate;
 
@@ -24,4 +25,5 @@ public class Animal implements Serializable {
     private Sex sex;
 
     private String name;
+
 }

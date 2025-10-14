@@ -10,3 +10,6 @@ spring:
     change-log: classpath:liquibase/db.changelog.yaml
     enabled: true
     default-schema: ${DB_SCHEMA}
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: none
