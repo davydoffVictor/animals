@@ -2,7 +2,6 @@ package com.example.zoo.domain.animal;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -13,7 +12,7 @@ public class Animal implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Enumerated(value = EnumType.STRING)
     private Type type;

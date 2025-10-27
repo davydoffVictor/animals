@@ -25,9 +25,9 @@ public class User implements Serializable {
     @Transient
     private String passwordConfirmation;
 
-    @CollectionTable(name = "users_animals")
+
     @OneToMany
-    @JoinColumn(name = "animal_id")
+    @JoinTable(inverseJoinColumns = @JoinColumn(name = "animal_id"))
     private List<Animal> animals;
 
 }
