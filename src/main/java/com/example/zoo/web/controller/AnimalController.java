@@ -23,7 +23,6 @@ public class AnimalController {
     private final AnimalService animalService;
     private final AnimalMapper animalMapper;
 
-
     @GetMapping("/{id}")
     public AnimalDto getById(@PathVariable Long id) {
         log.info("getById called. Id = {}", id);

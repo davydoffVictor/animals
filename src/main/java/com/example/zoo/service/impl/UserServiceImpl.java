@@ -5,6 +5,7 @@ import com.example.zoo.domain.user.User;
 import com.example.zoo.repository.UserRepository;
 import com.example.zoo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
@@ -21,6 +22,13 @@ public class UserServiceImpl implements UserService {
     public User getById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found. ID: " + id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User getByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User: " + username + " not found"));
     }
 
     @Override

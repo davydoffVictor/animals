@@ -5,6 +5,7 @@ import com.example.zoo.domain.exception.ResourceNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,7 +66,12 @@ public class ControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return new ExceptionResponse(LocalDateTime.now(), e.getMessage());
+    }
 
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleAuthenticationException(AuthenticationException e) {
+        return new ExceptionResponse(LocalDateTime.now(), "Authentication failed.");
     }
 
 }
