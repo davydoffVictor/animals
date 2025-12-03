@@ -30,7 +30,7 @@ public class AnimalServiceImpl implements AnimalService {
     public List<Animal> getAllByUserId(Long userId) {
         List<Animal> animals = animalRepository.findAllByUserId(userId);
         if (animals.isEmpty()) {
-            throw new ResourceNotFoundException("Animals or user no found. UserId = " + userId);
+            throw new ResourceNotFoundException("Animals or user not found. UserId = " + userId);
         }
         return animals;
     }
