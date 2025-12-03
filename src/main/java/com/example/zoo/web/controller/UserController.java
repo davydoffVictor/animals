@@ -13,6 +13,7 @@ import com.example.zoo.web.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,15 +32,8 @@ public class UserController {
     private final UserMapper userMapper;
     private final AnimalMapper animalMapper;
 
-    @PostMapping
-    public UserDto createNew(@Validated(OnCreate.class) @RequestBody UserDto userDto) {
-        log.info("Creating new user called. Username: {}", userDto.getUsername());
-        User user = userMapper.toEntity(userDto);
-        return userMapper.toDto(userService.create(user));
-    }
-
-
     @GetMapping("/{id}")
+    @PreAuthorize("@cse.canAccessUser(#id)")
     public UserDto getById(@PathVariable Long id) {
         log.info("getById called. Id = {}", id);
         User user = userService.getById(id);
@@ -47,12 +41,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("@cse.canAccessUser(#id)")
     public void deleteById(@PathVariable Long id) {
         log.info("deleteById called. Id = {}", id);
         userService.delete(id);
     }
 
     @GetMapping("/{id}/animals")
+    @PreAuthorize("@cse.canAccessUser(#id)")
     public List<AnimalDto>  getAnimalsByUserId(@PathVariable Long id) {
         log.info("getAnimalsByUserId called. Id = {}", id);
         List<Animal> animals = animalService.getAllByUserId(id);
@@ -60,6 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/animals")
+    @PreAuthorize("@cse.canAccessUser(#id)")
     public AnimalDto createAnimal(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody AnimalDto animalDto) {
         log.info("createAnimal called. UserId = {}" , id);
         Animal animal = animalMapper.toEntity(animalDto);
@@ -69,6 +66,7 @@ public class UserController {
     }
 
     @PutMapping
+    @PreAuthorize("@cse.canAccessUser(#userDto.id)")
     public UserDto update(@Validated(OnUpdate.class) @RequestBody UserDto userDto) {
         log.info("update called. Id = {}", userDto.getId());
         User user = userMapper.toEntity(userDto);

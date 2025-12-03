@@ -12,6 +12,10 @@ public interface UserService {
 
     User create(User user);
 
+    User createAdmin(User user);
+
     void delete(Long id);
+
+    boolean isAnimalOwner(Long userId, Long animalId);
 
 }

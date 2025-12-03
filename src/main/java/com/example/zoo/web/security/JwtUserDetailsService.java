@@ -1,19 +1,24 @@
 package com.example.zoo.web.security;
 
+import com.example.zoo.domain.user.User;
 import com.example.zoo.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-public class AnimalsUserDetailsService implements UserDetailsService {
+@Service
+@RequiredArgsConstructor
+public class JwtUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userService.getByUsername(username);
+        User user = userService.getByUsername(username);
+        return JwtEntityFactory.create(user);
     }
 
 }

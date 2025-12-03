@@ -1,4 +1,4 @@
-package com.example.zoo.service.properties;
+package com.example.zoo.web.security.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
